@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sample/main_model.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final String naokText = "naok";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          leading: Icon(Icons.video_call),
-          title: const Text(
-            'youtubeアプリ',
+      home: ChangeNotifierProvider<MainModel>(
+        create: (_) => MainModel(),
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: false,
+            leading: Icon(Icons.video_call),
+            title: const Text(
+              'youtubeアプリ',
             ),
-          actions: [
-            SizedBox(
-              width: 44,
-              child: TextButton(
+            actions: [
+              SizedBox(
+                width: 44,
+                child: TextButton(
                   child: Icon(Icons.search),
-                  onPressed: (){
+                  onPressed: () {
                     //何かを
                   },
                 ),
@@ -30,33 +35,30 @@ class MyApp extends StatelessWidget {
                 width: 44,
                 child: TextButton(
                   child: Icon(Icons.more_vert),
-                  onPressed: (){
+                  onPressed: () {
                     //何かを
                   },
                 ),
               )
             ],
-        ),
-        body: Container(
-          child:Column(
+          ),
+          body: Consumer<MainModel>(
+            builder: (context, model, child) {
+            return Center(
+            child: Column(
             children: [
-              Row(
-                children: [
-                  Image.network(
-                  'https://yt3.ggpht.com/ytc/AKedOLScaf6AoOKymriVpQkdgo2d0fl1uLpN5qC4cOS3=s176-c-k-c0x00ffffff-no-rj'
-                ),
-                Column(
-                  children:  [
-                      const Text(
-                    'youtubeアプリ',
-                    ),
-                  ]
-
+                Text(model.naokText),
+                ElevatedButton(
+                  child: Text('button'),
+                  onPressed: (){
+                    model.changeKboyText();
+                  },
                 )
-                ],
+              ]
               )
-            ],
-          )
+          );
+          }
+        ),
         ),
       ),
     );
